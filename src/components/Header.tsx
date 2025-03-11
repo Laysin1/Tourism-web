@@ -18,7 +18,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 interface HeaderProps {
   isLoggedIn?: boolean;
@@ -51,9 +51,9 @@ const Header = ({
       <div className="container mx-auto h-full px-4 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center">
-          <a href="/" className="flex items-center">
+          <Link to="/" className="flex items-center">
             <span className="text-2xl font-bold text-primary">TravelWorld</span>
-          </a>
+          </Link>
         </div>
 
         {/* Desktop Navigation */}
@@ -61,14 +61,15 @@ const Header = ({
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuLink
-                  className={cn(
-                    "group inline-flex h-10 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-primary focus:bg-gray-100 focus:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50",
-                  )}
-                  href="/"
-                >
-                  Home
-                </NavigationMenuLink>
+                <Link to="/">
+                  <NavigationMenuLink
+                    className={cn(
+                      "group inline-flex h-10 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-primary focus:bg-gray-100 focus:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50",
+                    )}
+                  >
+                    Home
+                  </NavigationMenuLink>
+                </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Destinations</NavigationMenuTrigger>
@@ -139,24 +140,26 @@ const Header = ({
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavigationMenuLink
-                  className={cn(
-                    "group inline-flex h-10 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-primary focus:bg-gray-100 focus:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50",
-                  )}
-                  href="/about"
-                >
-                  About
-                </NavigationMenuLink>
+                <Link to="/about">
+                  <NavigationMenuLink
+                    className={cn(
+                      "group inline-flex h-10 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-primary focus:bg-gray-100 focus:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50",
+                    )}
+                  >
+                    About
+                  </NavigationMenuLink>
+                </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavigationMenuLink
-                  className={cn(
-                    "group inline-flex h-10 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-primary focus:bg-gray-100 focus:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50",
-                  )}
-                  href="/contact"
-                >
-                  Contact
-                </NavigationMenuLink>
+                <Link to="/contact">
+                  <NavigationMenuLink
+                    className={cn(
+                      "group inline-flex h-10 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-primary focus:bg-gray-100 focus:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50",
+                    )}
+                  >
+                    Contact
+                  </NavigationMenuLink>
+                </Link>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
@@ -236,41 +239,46 @@ const Header = ({
       {isMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-200 absolute w-full left-0 right-0 z-50 shadow-lg">
           <div className="px-4 py-5 space-y-4">
-            <a
-              href="/"
-              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Home
-            </a>
-            <a
-              href="/destinations"
-              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Destinations
-            </a>
-            <a
-              href="/about"
-              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              About
-            </a>
-            <a
-              href="/contact"
-              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Contact
-            </a>
-            <a
-              href="/admin"
-              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 bg-gray-50"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Admin Dashboard
-            </a>
+            <Link to="/">
+              <div
+                className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Home
+              </div>
+            </Link>
+            <Link to="/destinations/1">
+              <div
+                className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Destinations
+              </div>
+            </Link>
+            <Link to="/about">
+              <div
+                className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                About
+              </div>
+            </Link>
+            <Link to="/contact">
+              <div
+                className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Contact
+              </div>
+            </Link>
+            <Link to="/admin">
+              <div
+                className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 bg-gray-50"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Admin Dashboard
+              </div>
+            </Link>
 
             <div className="pt-4 border-t border-gray-200">
               {isLoggedIn ? (
