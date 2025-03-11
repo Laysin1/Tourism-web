@@ -3,6 +3,7 @@ import { Star, MapPin, Heart } from "lucide-react";
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
+import { useNavigate } from "react-router-dom";
 
 const DestinationCard = ({
   id = "1",
@@ -16,10 +17,25 @@ const DestinationCard = ({
   onCardClick = () => {},
   onFavoriteClick = () => {},
 }) => {
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    if (onCardClick && typeof onCardClick === "function") {
+      onCardClick();
+    } else {
+      navigate(`/destinations/${id}`);
+    }
+  };
+
+  const handleViewDetails = (e) => {
+    e.stopPropagation();
+    navigate(`/destinations/${id}`);
+  };
+
   return (
     <Card
       className="w-full max-w-[350px] overflow-hidden transition-all duration-300 hover:shadow-lg bg-white cursor-pointer group"
-      onClick={() => (window.location.href = `/destinations/${id}`)}
+      onClick={handleCardClick}
     >
       <div className="relative">
         <div className="h-[200px] w-full overflow-hidden">
@@ -75,6 +91,7 @@ const DestinationCard = ({
           variant="outline"
           size="sm"
           className="group-hover:bg-primary group-hover:text-white"
+          onClick={handleViewDetails}
         >
           View Details
         </Button>
