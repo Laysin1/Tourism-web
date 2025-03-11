@@ -52,7 +52,7 @@ const CategorySection = ({
       id: "historical",
       name: "Historical",
       image:
-        "https://images.unsplash.com/photo-1548668392-d7b557b6d822?w=800&q=80",
+        "https://cdn-imgix.headout.com/media/images/bf7644e548a12ca8d92d1f56b96b20eb-Colosseum%201.jpg?fm=pjpg&auto=compress&w=1100&h=750&crop=faces&fit=min",
       description: "Step back in time with ancient sites and monuments",
       count: 19,
     },

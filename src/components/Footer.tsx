@@ -36,7 +36,7 @@ interface FooterProps {
 }
 
 const Footer = ({
-  companyName = "Wanderlust Travel",
+  companyName = "TravelWorld",
   companyLogo = "/vite.svg",
   socialLinks = {
     facebook: "https://facebook.com",
@@ -45,9 +45,9 @@ const Footer = ({
     youtube: "https://youtube.com",
   },
   contactInfo = {
-    email: "info@wanderlusttravel.com",
-    phone: "+1 (555) 123-4567",
-    address: "123 Adventure Ave, Travelville, TX 78701",
+    email: "honglaysin@gmail.com",
+    phone: "+885 87497386",
+    address: "Pnhom Penh",
   },
   quickLinks = [
     { title: "Destinations", href: "/destinations" },
