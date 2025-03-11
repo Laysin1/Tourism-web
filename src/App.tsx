@@ -4,6 +4,7 @@ import Home from "./components/home";
 import AboutPage from "./components/AboutPage.jsx";
 import ContactPage from "./components/ContactPage.jsx";
 import DestinationDetailsPage from "./components/DestinationDetailsPage.jsx";
+import AdminDashboard from "./components/AdminDashboard";
 import routes from "tempo-routes";
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
             path="/destinations/:id"
             element={<DestinationDetailsPage />}
           />
+          <Route path="/admin" element={<AdminDashboard />} />
           {import.meta.env.VITE_TEMPO === "true" && (
             <Route path="/tempobook/*" />
           )}

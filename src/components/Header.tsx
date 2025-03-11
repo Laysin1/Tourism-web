@@ -9,7 +9,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "./ui/navigation-menu";
-import { Search, Menu, X, User, LogIn } from "lucide-react";
+import { Search, Menu, X, User, LogIn, LayoutDashboard } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
   DropdownMenu,
@@ -18,6 +18,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { useNavigate } from "react-router-dom";
 
 interface HeaderProps {
   isLoggedIn?: boolean;
@@ -39,6 +40,7 @@ const Header = ({
   onProfileClick = () => {},
 }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -184,6 +186,10 @@ const Header = ({
                   <User className="mr-2 h-4 w-4" />
                   <span>Profile</span>
                 </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate("/admin")}>
+                  <LayoutDashboard className="mr-2 h-4 w-4" />
+                  <span>Admin Dashboard</span>
+                </DropdownMenuItem>
                 <DropdownMenuItem>My Trips</DropdownMenuItem>
                 <DropdownMenuItem>Favorites</DropdownMenuItem>
                 <DropdownMenuSeparator />
@@ -199,6 +205,14 @@ const Header = ({
                 Log in
               </Button>
               <Button onClick={onSignupClick}>Sign up</Button>
+              <Button
+                variant="outline"
+                onClick={() => navigate("/admin")}
+                className="ml-2"
+              >
+                <LayoutDashboard className="mr-2 h-4 w-4" />
+                Admin
+              </Button>
             </div>
           )}
 
@@ -249,6 +263,13 @@ const Header = ({
               onClick={() => setIsMenuOpen(false)}
             >
               Contact
+            </a>
+            <a
+              href="/admin"
+              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 bg-gray-50"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Admin Dashboard
             </a>
 
             <div className="pt-4 border-t border-gray-200">
