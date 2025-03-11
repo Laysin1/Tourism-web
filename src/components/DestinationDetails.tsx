@@ -50,6 +50,7 @@ interface Review {
 interface DestinationDetailsProps {
   isOpen?: boolean;
   onClose?: () => void;
+  showAsPage?: boolean;
   destination?: {
     id: string;
     name: string;
@@ -71,6 +72,7 @@ interface DestinationDetailsProps {
 const DestinationDetails = ({
   isOpen = true,
   onClose = () => {},
+  showAsPage = false,
   destination = {
     id: "1",
     name: "Tropical Paradise Resort",
@@ -200,6 +202,341 @@ const DestinationDetails = ({
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState("overview");
 
+  // If showAsPage is true, render without Dialog wrapper
+  if (showAsPage) {
+    return (
+      <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+        <div className="sticky top-0 z-10 bg-white pt-6 px-6">
+          <div className="flex flex-row items-start justify-between">
+            <div>
+              <h2 className="text-2xl font-bold">{destination.name}</h2>
+              <div className="flex items-center mt-1 text-sm text-muted-foreground">
+                <MapPin className="h-4 w-4 mr-1" />
+                <span>{destination.location}</span>
+                <span className="mx-2">•</span>
+                <div className="flex items-center">
+                  <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
+                  <span>{destination.rating}</span>
+                  <span className="ml-1">
+                    ({destination.reviewCount} reviews)
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onFavoriteToggle();
+                }}
+              >
+                <Heart
+                  className={`h-5 w-5 ${destination.isFavorite ? "fill-red-500 text-red-500" : "text-gray-500"}`}
+                />
+              </Button>
+              <Button variant="outline" size="icon">
+                <Share2 className="h-5 w-5" />
+              </Button>
+            </div>
+          </div>
+
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-6">
+            <TabsList className="w-full grid grid-cols-4">
+              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="attractions">Attractions</TabsTrigger>
+              <TabsTrigger value="accommodations">Accommodations</TabsTrigger>
+              <TabsTrigger value="reviews">Reviews</TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
+
+        <div className="p-6">
+          <TabsContent value="overview" className="mt-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div className="relative h-80 rounded-lg overflow-hidden">
+                <img
+                  src={destination.images[activeImageIndex]}
+                  alt={destination.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                {destination.images.slice(0, 4).map((image, index) => (
+                  <div
+                    key={index}
+                    className={`relative h-[150px] rounded-lg overflow-hidden cursor-pointer ${activeImageIndex === index ? "ring-2 ring-primary" : ""}`}
+                    onClick={() => setActiveImageIndex(index)}
+                  >
+                    <img
+                      src={image}
+                      alt={`${destination.name} ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold mb-2">
+                  About this destination
+                </h3>
+                <p className="text-muted-foreground">
+                  {destination.description}
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-semibold mb-2">Highlights</h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="flex flex-col items-center p-4 bg-muted rounded-lg">
+                    <Calendar className="h-6 w-6 mb-2 text-primary" />
+                    <span className="text-sm font-medium">
+                      Perfect for weekends
+                    </span>
+                  </div>
+                  <div className="flex flex-col items-center p-4 bg-muted rounded-lg">
+                    <Users className="h-6 w-6 mb-2 text-primary" />
+                    <span className="text-sm font-medium">Family friendly</span>
+                  </div>
+                  <div className="flex flex-col items-center p-4 bg-muted rounded-lg">
+                    <Bed className="h-6 w-6 mb-2 text-primary" />
+                    <span className="text-sm font-medium">
+                      Luxury accommodations
+                    </span>
+                  </div>
+                  <div className="flex flex-col items-center p-4 bg-muted rounded-lg">
+                    <Utensils className="h-6 w-6 mb-2 text-primary" />
+                    <span className="text-sm font-medium">Fine dining</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-semibold mb-2">Price</h3>
+                <p className="text-xl font-bold text-primary">
+                  {destination.price}
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Prices may vary depending on season and accommodation type
+                </p>
+              </div>
+
+              <div className="pt-4">
+                <Button className="w-full md:w-auto">Book Now</Button>
+                <Button
+                  variant="outline"
+                  className="w-full md:w-auto mt-2 md:mt-0 md:ml-2"
+                >
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  Visit Website
+                </Button>
+              </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="attractions" className="mt-0">
+            <h3 className="text-lg font-semibold mb-4">Popular Attractions</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {destination.attractions.map((attraction) => (
+                <Card key={attraction.id} className="overflow-hidden">
+                  <div className="h-48 overflow-hidden">
+                    <img
+                      src={attraction.image}
+                      alt={attraction.name}
+                      className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
+                    />
+                  </div>
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <CardTitle className="text-lg">
+                        {attraction.name}
+                      </CardTitle>
+                      <Badge variant="secondary">{attraction.category}</Badge>
+                    </div>
+                    <div className="flex items-center text-sm text-muted-foreground">
+                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
+                      <span>{attraction.rating}</span>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      {attraction.description}
+                    </p>
+                    {attraction.price && (
+                      <div className="flex justify-between items-center">
+                        <span className="font-medium text-primary">
+                          {attraction.price}
+                        </span>
+                        <Button size="sm">Book Activity</Button>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="accommodations" className="mt-0">
+            <h3 className="text-lg font-semibold mb-4">Where to Stay</h3>
+            <div className="space-y-6">
+              {destination.accommodations.map((accommodation) => (
+                <Card key={accommodation.id} className="overflow-hidden">
+                  <div className="flex flex-col md:flex-row">
+                    <div className="md:w-1/3 h-48 md:h-auto overflow-hidden">
+                      <img
+                        src={accommodation.image}
+                        alt={accommodation.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="md:w-2/3 p-6">
+                      <div className="flex justify-between items-start mb-2">
+                        <h3 className="text-xl font-semibold">
+                          {accommodation.name}
+                        </h3>
+                        <div className="flex items-center">
+                          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 mr-1" />
+                          <span className="font-medium">
+                            {accommodation.rating}
+                          </span>
+                        </div>
+                      </div>
+                      <p className="text-muted-foreground mb-4">
+                        {accommodation.description}
+                      </p>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {accommodation.amenities.map((amenity, index) => (
+                          <Badge key={index} variant="outline">
+                            {amenity}
+                          </Badge>
+                        ))}
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-lg font-bold text-primary">
+                          {accommodation.price}
+                        </span>
+                        <Button>Check Availability</Button>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="reviews" className="mt-0">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-lg font-semibold">Traveler Reviews</h3>
+              <Button>Write a Review</Button>
+            </div>
+
+            <div className="mb-6 p-4 bg-muted rounded-lg">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-3xl font-bold">{destination.rating}</div>
+                  <div className="flex mt-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className={`h-4 w-4 ${i < Math.floor(destination.rating) ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`}
+                      />
+                    ))}
+                  </div>
+                  <div className="text-sm text-muted-foreground mt-1">
+                    {destination.reviewCount} reviews
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-sm">Rating breakdown</div>
+                  <div className="space-y-1 mt-2">
+                    {[5, 4, 3, 2, 1].map((rating) => (
+                      <div key={rating} className="flex items-center text-sm">
+                        <span className="w-3">{rating}</span>
+                        <Star className="h-3 w-3 ml-1 text-yellow-400" />
+                        <div className="w-32 h-2 bg-gray-200 rounded-full mx-2">
+                          <div
+                            className="h-2 bg-yellow-400 rounded-full"
+                            style={{
+                              width: `${rating === 5 ? 70 : rating === 4 ? 20 : rating === 3 ? 7 : rating === 2 ? 2 : 1}%`,
+                            }}
+                          ></div>
+                        </div>
+                        <span className="text-xs text-muted-foreground">
+                          {rating === 5
+                            ? 70
+                            : rating === 4
+                              ? 20
+                              : rating === 3
+                                ? 7
+                                : rating === 2
+                                  ? 2
+                                  : 1}
+                          %
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              {destination.reviews.map((review) => (
+                <div key={review.id} className="border-b pb-6 last:border-0">
+                  <div className="flex justify-between">
+                    <div className="flex items-center">
+                      <img
+                        src={review.avatar}
+                        alt={review.author}
+                        className="w-10 h-10 rounded-full mr-3"
+                      />
+                      <div>
+                        <h4 className="font-medium">{review.author}</h4>
+                        <div className="text-sm text-muted-foreground">
+                          {review.date}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`h-4 w-4 ${i < review.rating ? "fill-yellow-400 text-yellow-400" : "text-gray-300"}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <p className="mt-3">{review.comment}</p>
+                  {review.images && review.images.length > 0 && (
+                    <div className="flex mt-3 space-x-2 overflow-x-auto pb-2">
+                      {review.images.map((image, index) => (
+                        <div
+                          key={index}
+                          className="flex-shrink-0 w-24 h-24 rounded-md overflow-hidden"
+                        >
+                          <img
+                            src={image}
+                            alt="Review"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </TabsContent>
+        </div>
+      </div>
+    );
+  }
+
+  // Otherwise render with Dialog wrapper
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-white p-0">

@@ -299,37 +299,14 @@ const DestinationDetailsPage = () => {
               <h1 className="text-3xl font-bold mb-2">{destination.name}</h1>
               <p className="text-gray-600 mb-4">
                 <span className="inline-flex items-center">
-                  <svg
-                    className="h-4 w-4 text-gray-500 mr-1"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
+                  <MapPin className="h-4 w-4 text-gray-500 mr-1" />
                   {destination.location}
                 </span>
               </p>
 
               <div className="flex items-center mb-4">
                 <div className="flex items-center">
-                  <svg
-                    className="h-5 w-5 text-yellow-400 fill-current"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                  </svg>
+                  <Star className="h-5 w-5 text-yellow-400 fill-current" />
                   <span className="ml-1 font-medium">{destination.rating}</span>
                   <span className="mx-2 text-gray-300">•</span>
                   <span className="text-gray-600">
@@ -389,14 +366,6 @@ const DestinationDetailsPage = () => {
             </div>
           </div>
         </div>
-
-        {/* Embedded DestinationDetails component */}
-        <DestinationDetails
-          isOpen={true}
-          onClose={() => {}}
-          destination={destination}
-          onFavoriteToggle={handleToggleFavorite}
-        />
       </main>
 
       <Footer />
