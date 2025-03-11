@@ -5,7 +5,7 @@ import Footer from "./Footer";
 import DestinationDetails from "./DestinationDetails";
 import ReviewForm from "./ReviewForm";
 import { Button } from "./ui/button";
-import { ArrowLeft, Calendar, Edit } from "lucide-react";
+import { ArrowLeft, Calendar, Edit, MapPin, Star } from "lucide-react";
 
 const DestinationDetailsPage = () => {
   const { id } = useParams();
